@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <err.h>
+#include <libgen.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -12,12 +14,10 @@
 unsigned int hostname_to_ip(char *hostname);
 
 int main(int argc, char** argv){
-	if(argc != 2){
-		printf("Bitte auf richtige Parameterübergabe achten: ./getipbyhost hostname");
-		return 0;
-	}
+	if (argc != 2)
+		errx(1, "usage: %s <hostname>", basename(argv[0]));
 	
-	(big_endian() == 1)? printf("Big Endian\n") : printf("Little Endian\n");
+	(is_little_endian() == 1)? printf("Little Endian\n") : printf("Big Endian\n");
 	struct sockaddr_in addr;
 	addr.sin_addr.s_addr=hostname_to_ip(argv[1]); /* local address */
   	printf("Hostname: %s - IP-Adresse (inet_ntoa): %s\nHostname: %s - IP-Adresse (my_inet_ntoa): %s \n" , argv[1] , inet_ntoa(addr.sin_addr), argv[1], my_inet_ntoa(addr.sin_addr));

@@ -5,9 +5,10 @@
 
 #include "my_net.h"
 
-int big_endian(){
-   unsigned int a=1;
-   return ((a << 1) == 2)? 0:1;
+int is_little_endian(){
+    unsigned int x = 1;
+  	char *c = (char*) &x;
+  	return (int)*c;
 }
 
 char *my_inet_ntoa(struct in_addr in){
@@ -22,7 +23,7 @@ char *my_inet_ntoa(struct in_addr in){
 	{
 	 	ipaddress[i] = (addr >> (i*8)) & 0xFF;
 	}
-	if(big_endian() == 0)
+	if(is_little_endian() == 1)
 		snprintf(buf, sizeof(buf), "%d.%d.%d.%d", ipaddress[0], ipaddress[1], ipaddress[2], ipaddress[3]);
  	else
 	 	snprintf(buf, sizeof(buf), "%d.%d.%d.%d", ipaddress[3], ipaddress[2], ipaddress[1], ipaddress[0]);

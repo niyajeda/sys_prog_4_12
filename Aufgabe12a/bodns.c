@@ -6,7 +6,7 @@
 #include "my_net.h"
 
 int main(int argc, char** argv){
-	(big_endian() == 1)? printf("Big Endian\n") : printf("Little Endian\n");
+	(is_little_endian() == 1)? printf("Little Endian\n") : printf("Big Endian\n");
 	struct sockaddr_in addr;
 
 	addr.sin_family=AF_INET;
