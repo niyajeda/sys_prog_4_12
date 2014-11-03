@@ -19,18 +19,17 @@ int main(int argc, char **argv){
 	hints.ai_socktype = SOCK_STREAM;
 
 	/*
-	 * Get our sockaddr structure(s) first via getaddrinfo(). We do not
-	 * care about a port number so we set "servname" to NULL.
-	 */
+	 * Hole sockaddr struct mit getaddrinfo(). Da Portname egal - servname = NULL
+	*/
 	if ((error = getaddrinfo(argv[1], NULL, &hints, &res)) != 0)
 		errx(1, "%s", gai_strerror(error));
 
 	for (resorig = res; res != NULL; res = res->ai_next) {
-		/* Here getnameinfo() is used ala inet_ntop(). */
+		/* getnameinfo() anstatt inet_ntop() zum umwandeln der Adresse */
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    numhost, sizeof (numhost), NULL, 0, NI_NUMERICHOST)) != 0)
 			errx(1, "%s", gai_strerror(error));
-		/* Now try to resolve the address back to hostname. */
+		//Adresse auflösen
 		if ((error = getnameinfo(res->ai_addr, res->ai_addrlen,
 		    host, sizeof (host), NULL, 0, 0)) != 0)
 			errx(1, "%s", gai_strerror(error));
