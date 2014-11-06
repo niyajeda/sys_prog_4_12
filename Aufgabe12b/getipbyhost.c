@@ -15,7 +15,7 @@ unsigned int hostname_to_ip(char *hostname);
 
 int main(int argc, char** argv){
 	if (argc != 2)
-		errx(1, "usage: %s <hostname>", basename(argv[0]));
+		errx(1, "usage: %s <hostname>", argv[0]);
 	
 	(is_little_endian() == 1)? printf("Little Endian\n") : printf("Big Endian\n");
 	struct sockaddr_in addr;
@@ -30,11 +30,11 @@ unsigned int hostname_to_ip(char *hostname)
  	int err;
 
  	memset(&hints, 0, sizeof(hints));
- 	hints.ai_socktype = SOCK_STREAM;
+ 	hints.ai_socktype = SOCK_DGRAM;
  	hints.ai_family = AF_INET;
 
  	if ((err = getaddrinfo(hostname, NULL, &hints, &res)) != 0) {
- 	printf("error %d\n", err);
+ 		printf("error %d\n", err);
  	return 1;
  	}
 	addr.s_addr = ((struct sockaddr_in *)(res->ai_addr))->sin_addr.s_addr;
