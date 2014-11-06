@@ -23,6 +23,7 @@ char *my_inet_ntoa(struct in_addr in){
  	}
 
  	int i;
+	
 	for(i=0; i<4; i++)
 	{
 	 	ipaddress[i] = (addr >> (i*8)) & 0xFF;

@@ -15,8 +15,13 @@ char *my_inet_ntoa(struct in_addr in){
  	/* interpret IPv4-Address as 32bit int */
  	unsigned int addr = *(unsigned int *)&in;
  	unsigned char *ipaddress;
- 	static char buf[4*sizeof "123"];
+ 	static char buf[sizeof("255.255.255.255")];
  	ipaddress = (unsigned char*)malloc(4*sizeof(unsigned char));
+ 	if(ipaddress == NULL){
+ 		printf("Fehler beim Anfordern des Speichers\n");
+ 		return(0);
+ 	}
+
  	int i;
 	
 	for(i=0; i<4; i++)
